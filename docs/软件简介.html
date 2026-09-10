@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>禁止上传光柱（PreventUpload） 软件简介</title>
+<style>
+/* ============================================================
+   样式区：禁止修改！
+   本模板是 xiangmujiaocheng 技能的「软件简介」专属模板（清爽文档蓝）。
+   修改此区会破坏所有项目软件简介的视觉统一。
+   ============================================================ */
+:root{--acc:#2563eb;--accbg:#eff6ff;--line:#e2e8f0;--line2:#cbd5e1;--text:#1e293b;--dim:#64748b;--bg2:#f8fafc;--ok:#16a34a;--warn:#d97706;--warnbg:#fffbeb;--warnline:#fde68a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:15.5px/1.85 "Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;color:var(--text);background:#fff}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+code{background:var(--accbg);color:#1d4ed8;border-radius:4px;padding:1px 7px;font-family:Consolas,"Courier New",monospace;font-size:13.5px}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:13px 16px;overflow:auto}
+pre code{background:none;color:#0f172a;padding:0}
+.hide{display:none!important}
+
+.hero{background:linear-gradient(180deg,#eef5ff 0%,#ffffff 100%);border-bottom:1px solid var(--line);padding:44px 20px 32px;text-align:center}
+.kind{display:inline-block;background:var(--acc);color:#fff;border-radius:4px;font-size:13px;padding:2px 12px;letter-spacing:2px}
+.hero h1{margin:14px 0 8px;font-size:34px}
+.hero h1 .accent{color:var(--acc)}
+.hero .sub{color:var(--dim);margin:0 auto;max-width:640px;font-size:15.5px}
+
+.toolbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.toolbar-in{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 20px}
+#searchInput{flex:1 1 240px;border:1px solid var(--line2);border-radius:8px;padding:8px 14px;font-size:14.5px;outline:none;background:var(--bg2)}
+#searchInput:focus{border-color:var(--acc);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line2);background:#fff;color:var(--dim);border-radius:999px;padding:5px 15px;font-size:13.5px;cursor:pointer}
+.chip:hover{border-color:var(--acc);color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.count{color:var(--dim);font-size:13px;white-space:nowrap}
+
+.content{max-width:980px;margin:0 auto;padding:30px 20px 70px}
+
+.unit{margin:0 0 38px}
+.group{font-size:12.5px;color:var(--acc);letter-spacing:2px;margin-bottom:4px}
+.unit>h2{margin:0 0 10px;font-size:22px;border-left:4px solid var(--acc);padding-left:12px}
+.lead{color:var(--dim);margin:0 0 14px;font-size:14.5px}
+.unit h3{font-size:16.5px;margin:20px 0 8px}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:16px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:15px 17px;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:.15s}
+.card:hover{border-color:var(--acc);box-shadow:0 4px 14px rgba(37,99,235,.12)}
+.card .icon{font-size:22px}
+.card h4{margin:7px 0 5px;font-size:15.5px;color:var(--acc)}
+.card p{margin:0;color:var(--dim);font-size:13.5px}
+
+.note,.warning{border-radius:8px;padding:12px 16px;margin:14px 0;font-size:14.5px}
+.note{background:var(--accbg);border:1px solid #bfdbfe}
+.warning{background:var(--warnbg);border:1px solid var(--warnline)}
+
+table.data-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px}
+.data-table th{background:var(--accbg);color:#1d4ed8;text-align:left}
+.data-table th,.data-table td{border:1px solid var(--line);padding:8px 13px}
+.data-table tr:nth-child(even) td{background:#fbfdff}
+
+details.faq{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:10px 16px;margin:9px 0}
+details.faq summary{cursor:pointer;font-weight:600}
+details.faq[open]{border-color:var(--acc)}
+details.faq .answer{color:var(--dim);padding-top:7px}
+
+.shot{border:2px dashed var(--line2);border-radius:8px;padding:26px;text-align:center;color:var(--dim);font-size:14px;margin:13px 0}
+.badge{display:inline-block;border-radius:4px;padding:1px 10px;font-size:12.5px;margin-right:6px;color:var(--acc);border:1px solid var(--acc)}
+.badge.ok{color:var(--ok);border-color:var(--ok)}
+.badge.warn{color:var(--warn);border-color:var(--warn)}
+.empty{border:1px dashed var(--line2);border-radius:10px;padding:44px;text-align:center;color:var(--dim);margin:20px 0}
+
+.foot{border-top:1px solid var(--line);color:var(--dim);text-align:center;padding:20px;font-size:13px;background:var(--bg2)}
+@media (max-width:640px){.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="kind">软件简介</span>
+  <h1>禁止上传光柱 <span class="accent">光柱上传一键封死</span></h1>
+  <p class="sub">装上即拦：玩家休想再通过光柱把物资传出服，跨服物资流动完全由你说了算。</p>
+</header>
+
+<div class="toolbar"><div class="toolbar-in">
+  <input id="searchInput" type="search" placeholder="搜索功能…">
+  <div class="chips">
+    <button class="chip on" data-cat="all">全部</button>
+    <button class="chip" data-cat="core">核心卖点</button>
+    <button class="chip" data-cat="adv">特色功能</button>
+    <button class="chip" data-cat="env">适配与购买</button>
+  </div>
+  <span class="count" id="resultCount"></span>
+</div></div>
+
+<main class="content">
+
+<!-- 01 软件定位 -->
+<section class="unit" id="s1" data-cat="core">
+  <div class="group">01 · 软件定位</div>
+  <h2>软件定位</h2>
+  <p>不想让服里的物资通过光柱随意跨服外流——防跑服带走装备、防跨服套利、防绕开你的跨服规则——可原版服务器没有「关闭光柱上传」的开关，靠人盯更是永远盯不住。</p>
+  <p>禁止上传光柱（PreventUpload）在服务器底层直接拒绝「物品上传光柱」这一动作：装上即生效，零配置；玩家被拦的瞬间自动收到红字引导，告诉他们改走限时转移魔方。你部署一次，它天天替你守着物资出口。</p>
+</section>
+
+<!-- 02 适配环境 -->
+<section class="unit" id="s2" data-cat="env">
+  <div class="group">02 · 适配环境</div>
+  <h2>适配环境</h2>
+  <table class="data-table">
+    <tr><th style="width:150px">项目</th><th>要求</th></tr>
+    <tr><td>操作系统</td><td>Windows（64 位）</td></tr>
+    <tr><td>游戏服务端</td><td>方舟：生存进化（ARK: Survival Evolved）专用服务器</td></tr>
+    <tr><td>运行依赖</td><td>ArkApi（ServerAPI）插件框架，最低版本 3.5</td></tr>
+    <tr><td>其他</td><td>无——不需要数据库，不需要额外运行库</td></tr>
+  </table>
+</section>
+
+<!-- 03 功能展示·卖点卡片 -->
+<div class="card-grid">
+  <div class="unit card" data-cat="core"><div class="icon">🚫</div><h4>光柱上传封死</h4><p>物品上传光柱的请求被服务器直接拒绝，物资一个都传不走。</p></div>
+  <div class="unit card" data-cat="core"><div class="icon">📣</div><h4>屏幕引导不添堵</h4><p>拦截瞬间提示玩家该走哪条路，文案、颜色、大小、时长随你自定义，也可静默。</p></div>
+  <div class="unit card" data-cat="adv"><div class="icon">🌐</div><h4>3.54 / 3.55 通吃</h4><p>控制台中文编码自动适配，新老 ArkApi 服务器都不乱码。</p></div>
+  <div class="unit card" data-cat="adv"><div class="icon">♻️</div><h4>改配置不重启</h4><p>一条 Reload 命令热重载配置，服务器不用停机。</p></div>
+</div>
+
+<!-- 03 重点功能一 -->
+<section class="unit" id="s3" data-cat="core">
+  <div class="group">03 · 重点功能</div>
+  <h2>光柱上传拦截 <span class="badge ok">核心</span></h2>
+  <p><b>什么功能：</b>玩家把物品放入光柱（Tribute）终端上传时，服务器直接拒绝这次上传，物品不会离开玩家背包。</p>
+  <p><b>什么作用：</b>物资出不了服——刷物资跨服套利、跑服带走装备、绕开跨服规则的口子，从此全部堵死。</p>
+  <p><b>给你的好处：</b>没有它，你只能眼睁睁看着物资从光柱流走，或为「该不该让他传」跟玩家扯皮；有了它，拦截在服务器底层自动完成，全天候生效、无人可绕。你定规则，它来执行，一句废话都不用多说。</p>
+  <div class="shot">📷 此处应放截图：游戏内上传被拦截的红字提示</div>
+</section>
+
+<!-- 03 重点功能二 -->
+<section class="unit" id="s4" data-cat="core">
+  <div class="group">03 · 重点功能</div>
+  <h2>红字引导提示 <span class="badge ok">贴心</span></h2>
+  <p><b>什么功能：</b>拦截的同时，向玩家屏幕发送醒目提示（默认红字「服务器禁止上传光柱,请使用限时转移魔方跨图传送物资!」）。文案、颜色、大小、显示时长全部在 <code>config.json</code> 里随你定制；文案设为空字符串则改为静默拦截，一个字不多说。</p>
+  <p><b>什么作用：</b>玩家被拦的第一秒就知道该走哪条路，不会误以为服务器坏了。</p>
+  <p><b>给你的好处：</b>没有提示，「为什么传不上去」能把你的群问爆，客服全是重复劳动；有了它，引导自动完成、一次到位。文案想换就换，一条 Reload 命令即时生效，连服务器都不用重启。你睡觉，它替你把规则讲清楚。</p>
+</section>
+
+<!-- 04 运行效果 -->
+<section class="unit" id="s5" data-cat="core">
+  <div class="group">04 · 运行效果</div>
+  <h2>运行效果</h2>
+  <div class="shot">📷 此处应放截图：游戏内光柱上传被拦截时的红字提示</div>
+  <div class="shot">📷 此处应放截图：服务器控制台启动横幅「先锋.禁止上传光柱(1.0) …」</div>
+</section>
+
+<!-- 05 价格与购买 -->
+<section class="unit" id="s6" data-cat="env">
+  <div class="group">05 · 价格与购买</div>
+  <h2>价格与购买</h2>
+  <table class="data-table">
+    <tr><th style="width:130px">版本</th><th>包含内容</th><th style="width:110px">价格</th></tr>
+    <tr><td>正式版 v1.0</td><td>插件 dll + 配置文件 + 服主/玩家教程与软件简介文档</td><td>免费</td></tr>
+  </table>
+  <div class="note">咨询与获取：作者 QQ 711919　·　先锋方舟服主群 138535385。</div>
+</section>
+
+<div class="empty hide" id="emptyState">没有匹配的内容，换个关键词或分类试试</div>
+</main>
+
+<footer class="foot">
+  禁止上传光柱 · 软件简介 · 2026-09
+</footer>
+
+<script>
+(function(){
+var inp=document.getElementById('searchInput');
+var chips=[].slice.call(document.querySelectorAll('.chip'));
+var units=[].slice.call(document.querySelectorAll('.unit'));
+var empty=document.getElementById('emptyState');
+var cnt=document.getElementById('resultCount');
+var cat='all';
+function go(){
+  var q=(inp.value||'').trim().toLowerCase(),n=0;
+  units.forEach(function(u){
+    var okC=(cat=='all'||u.getAttribute('data-cat')==cat);
+    var t=(u.textContent||'').toLowerCase()+(u.getAttribute('data-kw')||'');
+    var okQ=!q||t.indexOf(q)>-1;
+    var s=okC&&okQ;u.classList.toggle('hide',!s);if(s)n++;
+  });
+  empty.classList.toggle('hide',n>0);
+  cnt.textContent=n+' / '+units.length+' 条';
+}
+chips.forEach(function(c){c.addEventListener('click',function(){
+  chips.forEach(function(x){x.classList.remove('on')});c.classList.add('on');
+  cat=c.getAttribute('data-cat');go();
+})});
+inp.addEventListener('input',go);go();
+})();
+</script>
+
+</body>
+</html>
