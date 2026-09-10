@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>禁止上传光柱（PreventUpload） 玩家教程</title>
+<style>
+/* ============================================================
+   样式区：禁止修改！
+   本模板是 xiangmujiaocheng 技能的「玩家教程」专属模板（清爽文档蓝）。
+   修改此区会破坏所有项目玩家教程的视觉统一。
+   ============================================================ */
+:root{--acc:#2563eb;--accbg:#eff6ff;--line:#e2e8f0;--line2:#cbd5e1;--text:#1e293b;--dim:#64748b;--bg2:#f8fafc;--ok:#16a34a;--warn:#d97706;--warnbg:#fffbeb;--warnline:#fde68a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:15.5px/1.85 "Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;color:var(--text);background:#fff}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+code{background:var(--accbg);color:#1d4ed8;border-radius:4px;padding:1px 7px;font-family:Consolas,"Courier New",monospace;font-size:13.5px}
+pre{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:13px 16px;overflow:auto}
+pre code{background:none;color:#0f172a;padding:0}
+.hide{display:none!important}
+
+.hero{background:linear-gradient(180deg,#eef5ff 0%,#ffffff 100%);border-bottom:1px solid var(--line);padding:36px 20px 26px}
+.hero-in{max-width:1180px;margin:0 auto}
+.kind{display:inline-block;background:var(--acc);color:#fff;border-radius:4px;font-size:13px;padding:2px 12px;letter-spacing:2px}
+.hero h1{margin:12px 0 6px;font-size:30px}
+.hero h1 .accent{color:var(--acc)}
+.hero .sub{color:var(--dim);margin:0;font-size:15px}
+
+.toolbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.toolbar-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:10px 20px}
+#searchInput{flex:1 1 240px;border:1px solid var(--line2);border-radius:8px;padding:8px 14px;font-size:14.5px;outline:none;background:var(--bg2)}
+#searchInput:focus{border-color:var(--acc);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line2);background:#fff;color:var(--dim);border-radius:999px;padding:5px 15px;font-size:13.5px;cursor:pointer}
+.chip:hover{border-color:var(--acc);color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.count{color:var(--dim);font-size:13px;white-space:nowrap}
+
+.layout{max-width:1180px;margin:0 auto;padding:26px 20px 70px;display:flex;gap:36px;align-items:flex-start}
+.toc{flex:0 0 215px;position:sticky;top:66px}
+.toc-title{font-size:12.5px;color:var(--dim);letter-spacing:3px;margin-bottom:8px;padding-left:10px}
+.toc a{display:block;color:var(--dim);padding:6px 10px;border-left:2px solid var(--line);font-size:14px}
+.toc a:hover{color:var(--acc);border-left-color:var(--acc);background:var(--accbg);text-decoration:none}
+.toc a.dim{opacity:.35}
+.content{flex:1 1 500px;min-width:320px}
+
+.unit{margin:0 0 38px}
+.group{font-size:12.5px;color:var(--acc);letter-spacing:2px;margin-bottom:4px}
+.unit>h2{margin:0 0 10px;font-size:22px;border-left:4px solid var(--acc);padding-left:12px}
+.lead{color:var(--dim);margin:0 0 14px;font-size:14.5px}
+.unit h3{font-size:16.5px;margin:20px 0 8px}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px;margin:16px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:15px 17px;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:.15s}
+.card:hover{border-color:var(--acc);box-shadow:0 4px 14px rgba(37,99,235,.12)}
+.card .icon{font-size:22px}
+.card h4{margin:7px 0 5px;font-size:15.5px;color:var(--acc)}
+.card p{margin:0;color:var(--dim);font-size:13.5px}
+
+ol.steps{list-style:none;counter-reset:st;padding:0;margin:8px 0 0}
+ol.steps>li{counter-increment:st;position:relative;padding:0 0 20px 48px}
+ol.steps>li::before{content:counter(st);position:absolute;left:0;top:2px;width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:14px}
+ol.steps>li::after{content:"";position:absolute;left:14px;top:36px;bottom:4px;width:2px;background:var(--line)}
+ol.steps>li:last-child{padding-bottom:2px}
+ol.steps>li:last-child::after{display:none}
+.step-title{display:block;font-weight:700;margin-bottom:3px}
+ol.steps p{margin:0}
+
+.note,.warning{border-radius:8px;padding:12px 16px;margin:14px 0;font-size:14.5px}
+.note{background:var(--accbg);border:1px solid #bfdbfe}
+.warning{background:var(--warnbg);border:1px solid var(--warnline)}
+
+table.data-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px}
+.data-table th{background:var(--accbg);color:#1d4ed8;text-align:left}
+.data-table th,.data-table td{border:1px solid var(--line);padding:8px 13px}
+.data-table tr:nth-child(even) td{background:#fbfdff}
+
+details.faq{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:10px 16px;margin:9px 0}
+details.faq summary{cursor:pointer;font-weight:600}
+details.faq[open]{border-color:var(--acc)}
+details.faq .answer{color:var(--dim);padding-top:7px}
+
+.shot{border:2px dashed var(--line2);border-radius:8px;padding:26px;text-align:center;color:var(--dim);font-size:14px;margin:13px 0}
+.badge{display:inline-block;border-radius:4px;padding:1px 10px;font-size:12.5px;margin-right:6px;color:var(--acc);border:1px solid var(--acc)}
+.badge.ok{color:var(--ok);border-color:var(--ok)}
+.badge.warn{color:var(--warn);border-color:var(--warn)}
+.empty{border:1px dashed var(--line2);border-radius:10px;padding:44px;text-align:center;color:var(--dim);margin:20px 0}
+
+.foot{border-top:1px solid var(--line);color:var(--dim);text-align:center;padding:20px;font-size:13px;background:var(--bg2)}
+@media (max-width:820px){.toc{display:none}.layout{padding-top:18px}.hero h1{font-size:24px}}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="hero-in">
+  <span class="kind">玩家教程</span>
+  <h1>禁止上传光柱 <span class="accent">玩家指南</span></h1>
+  <p class="sub">本服规则：光柱物品上传已禁用，跨图传送请使用限时转移魔方</p>
+</div></header>
+
+<div class="toolbar"><div class="toolbar-in">
+  <input id="searchInput" type="search" placeholder="搜索玩法、问题…">
+  <div class="chips">
+    <button class="chip on" data-cat="all">全部</button>
+    <button class="chip" data-cat="rules">玩法说明</button>
+    <button class="chip" data-cat="faq">常见问题</button>
+  </div>
+  <span class="count" id="resultCount"></span>
+</div></div>
+
+<div class="layout">
+<nav class="toc">
+  <div class="toc-title">目录</div>
+  <a href="#w1">功能总览</a>
+  <a href="#w2">玩法说明</a>
+  <a href="#w3">常见问题</a>
+  <a href="#w4">获取帮助</a>
+</nav>
+
+<main class="content">
+
+<!-- 01 功能总览 -->
+<section class="unit" id="w1" data-cat="rules">
+  <div class="group">第一章 · 功能总览</div>
+  <h2>功能总览</h2>
+  <p class="lead">本服安装了「禁止上传光柱」插件：玩家不能把物品通过光柱（Tribute）终端上传跨服。这个功能不需要你输入任何命令，你会直接感受到的变化如下：</p>
+  <table class="data-table">
+    <tr><th style="width:200px">场景</th><th>你会看到什么</th></tr>
+    <tr><td>在光柱终端上传物品</td><td>上传不生效，屏幕出现红字提示（默认为「服务器禁止上传光柱,请使用限时转移魔方跨图传送物资!」，具体以本服设置为准）</td></tr>
+    <tr><td>想跨图转移物资</td><td>按提示改用服务器提供的限时转移魔方</td></tr>
+  </table>
+  <div class="shot">📷 此处应放截图：光柱上传被拦截时的红字提示</div>
+</section>
+
+<!-- 02 玩法说明 -->
+<section class="unit" id="w2" data-cat="rules">
+  <div class="group">第二章 · 玩法说明</div>
+  <h2>跨图转移物资的正确姿势</h2>
+  <ol class="steps">
+    <li><span class="step-title">走到光柱终端</span><p>像平时一样打开光柱（Tribute）终端 → 想把物品放进去上传 → 下一步。</p></li>
+    <li><span class="step-title">看到红字提示</span><p>上传不会成功，屏幕出现红字提示（默认为「服务器禁止上传光柱,请使用限时转移魔方跨图传送物资!」，具体以本服设置为准）→ 这就是本服规则在起作用。</p></li>
+    <li><span class="step-title">改用限时转移魔方</span><p>跨图传送物资请使用服务器提供的限时转移魔方（具体获得方式与用法以服务器公告为准，不清楚就问管理员）。</p></li>
+  </ol>
+  <div class="note">物品不会丢：上传请求被服务器直接拒绝，物品仍然留在你的背包里，原封不动。</div>
+  <div class="warning">不要反复尝试上传光柱——每次都会被拦截，物资也不会因此传走。跨图请直接走限时转移魔方。</div>
+</section>
+
+<!-- 03 常见问题 -->
+<section class="unit" id="w3" data-cat="faq">
+  <div class="group">第三章 · 常见问题</div>
+  <h2>常见问题</h2>
+  <details class="faq"><summary>为什么我的物品传不上光柱？</summary><div class="answer">先看这个：上传时屏幕出现红字提示就说明是本服规则——本服已禁用光柱物品上传，不是你操作有误，也不是游戏坏了。跨图请用限时转移魔方。</div></details>
+  <details class="faq"><summary>我的物品会丢吗？</summary><div class="answer">不会。上传请求被服务器直接拒绝，物品一直在你的背包里，可以随时拿出来正常使用。</div></details>
+  <details class="faq"><summary>恐龙和角色也能上传吗？</summary><div class="answer">本插件只限制「物品上传光柱」。恐龙、角色是否可以跨图转移取决于服务器自身的设置，拿不准就问管理员。</div></details>
+  <details class="faq"><summary>红字提示是什么意思？</summary><div class="answer">意思是：本服禁止用光柱上传物品，跨图传送物资请按提示走对应方式（默认提示使用限时转移魔方，具体以你所在服务器的设置为准）。</div></details>
+  <details class="faq"><summary>限时转移魔方怎么用？</summary><div class="answer">限时转移魔方是服务器另行提供的跨图传送功能，不属于本插件。具体获得方式与使用方法请查看服务器公告或咨询管理员。</div></details>
+</section>
+
+<!-- 04 获取帮助 -->
+<section class="unit" id="w4" data-cat="faq">
+  <div class="group">第四章 · 获取帮助</div>
+  <h2>获取帮助</h2>
+  <div class="note">遇到问题先联系你所玩服务器的管理员反馈，建议附上当时的红字提示截图和发生时间。也可通过先锋方舟服主群 138535385 联系到我们。</div>
+</section>
+
+<div class="empty hide" id="emptyState">没有匹配的内容，换个关键词或分类试试</div>
+</main>
+</div>
+
+<footer class="foot">
+  禁止上传光柱 · 玩家教程 · 2026-09
+</footer>
+
+<script>
+(function(){
+var inp=document.getElementById('searchInput');
+var chips=[].slice.call(document.querySelectorAll('.chip'));
+var units=[].slice.call(document.querySelectorAll('.unit'));
+var empty=document.getElementById('emptyState');
+var cnt=document.getElementById('resultCount');
+var cat='all';
+function go(){
+  var q=(inp.value||'').trim().toLowerCase(),n=0;
+  units.forEach(function(u){
+    var okC=(cat=='all'||u.getAttribute('data-cat')==cat);
+    var t=(u.textContent||'').toLowerCase()+(u.getAttribute('data-kw')||'');
+    var okQ=!q||t.indexOf(q)>-1;
+    var s=okC&&okQ;u.classList.toggle('hide',!s);if(s)n++;
+  });
+  [].forEach.call(document.querySelectorAll('.toc a'),function(a){
+    var el=document.getElementById(a.getAttribute('href').slice(1));
+    a.classList.toggle('dim',!(el&&!el.classList.contains('hide')));
+  });
+  empty.classList.toggle('hide',n>0);
+  cnt.textContent=n+' / '+units.length+' 条';
+}
+chips.forEach(function(c){c.addEventListener('click',function(){
+  chips.forEach(function(x){x.classList.remove('on')});c.classList.add('on');
+  cat=c.getAttribute('data-cat');go();
+})});
+inp.addEventListener('input',go);go();
+})();
+</script>
+
+</body>
+</html>
